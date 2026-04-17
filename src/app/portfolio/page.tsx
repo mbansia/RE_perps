@@ -115,8 +115,8 @@ export default function PortfolioPage() {
         <h2 className="label mb-4">Open Positions ({positions.length})</h2>
         {isLoading ? (
           <div className="space-y-3">
-            <div className="h-16 rounded-xl animate-pulse" style={{ background: "rgba(74, 28, 28, 0.3)" }} />
-            <div className="h-16 rounded-xl animate-pulse" style={{ background: "rgba(74, 28, 28, 0.2)" }} />
+            <div className="h-16 rounded-xl animate-pulse" style={{ background: "rgb(var(--c-oxide) / 0.18)" }} />
+            <div className="h-16 rounded-xl animate-pulse" style={{ background: "rgb(var(--c-oxide) / 0.12)" }} />
           </div>
         ) : positions.length === 0 ? (
           <p className="text-text-muted text-sm py-10 text-center">No open positions. Trade a market to get started.</p>

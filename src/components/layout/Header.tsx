@@ -2,13 +2,22 @@
 
 import Link from "next/link";
 import { ConnectButton } from "@/components/shared/ConnectButton";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 
 export function Header() {
   return (
-    <header className="border-b border-border sticky top-0 z-50 backdrop-blur-xl"
-      style={{ background: "linear-gradient(180deg, rgba(12, 4, 4, 0.95), rgba(26, 10, 10, 0.85))" }}>
+    <header
+      className="border-b border-border sticky top-0 z-50 backdrop-blur-xl"
+      style={{
+        background:
+          "linear-gradient(180deg, rgb(var(--c-bg-base) / 0.95), rgb(var(--c-bg-card) / 0.85))",
+      }}
+    >
       {/* Mission-status ticker */}
-      <div className="border-b border-border/50 bg-void/40">
+      <div
+        className="border-b border-border/50"
+        style={{ background: "rgb(var(--c-oxide) / 0.08)" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-6 flex items-center justify-between overflow-hidden">
           <div className="flex items-center gap-4 ticker-strip">
             <span className="flex items-center gap-1.5">
@@ -52,7 +61,10 @@ export function Header() {
             ))}
           </nav>
         </div>
-        <ConnectButton />
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <ConnectButton />
+        </div>
       </div>
     </header>
   );

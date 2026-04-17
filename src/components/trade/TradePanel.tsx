@@ -149,7 +149,7 @@ export function TradePanel({ marketId, marketName, currentPrice }: TradePanelPro
 
       {/* Order summary */}
       {size > 0 && (
-        <div className="space-y-2 text-sm p-4 rounded-xl" style={{ background: "rgba(74, 28, 28, 0.2)" }}>
+        <div className="space-y-2 text-sm p-4 rounded-xl" style={{ background: "rgb(var(--c-oxide) / 0.1)" }}>
           <div className="flex justify-between">
             <span className="text-text-muted">Notional</span>
             <span className="data-value">${notional.toFixed(2)}</span>

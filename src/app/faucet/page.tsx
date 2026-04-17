@@ -30,7 +30,7 @@ export default function FaucetPage() {
                 step.done
                   ? "bg-long/15 text-long border border-long/20"
                   : "text-text-muted border border-border"
-              }`} style={!step.done ? { background: "rgba(74, 28, 28, 0.3)" } : {}}>
+              }`} style={!step.done ? { background: "rgb(var(--c-oxide) / 0.18)" } : {}}>
                 {step.done ? "✓" : i + 1}
               </div>
               <div>

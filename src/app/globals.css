@@ -4,18 +4,110 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------
+   Theme variables — space-separated RGB channels so Tailwind's alpha
+   modifiers (e.g. `bg-terra/20`) continue to work. Tailwind config
+   reads these via `rgb(var(--c-xxx) / <alpha-value>)`.
+   :root = light mode (Mars daylight). .dark = dark mode (Mars night).
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Surfaces — pale peach daylight atmosphere */
+  --c-bg-base:     250 238 220;   /* #FAEEDC — cream peach */
+  --c-bg-card:     255 247 238;   /* #FFF7EE — ivory */
+  --c-bg-elevated: 245 228 208;   /* #F5E4D0 */
+  --c-bg-modal:    250 238 220;
+  --c-bg-input:    255 248 240;
+
+  /* Text — deep rust-brown on cream */
+  --c-text-primary:   61 26 26;    /* #3D1A1A */
+  --c-text-secondary: 122 78 58;   /* #7A4E3A */
+  --c-text-muted:     165 134 112; /* #A58670 */
+  --c-text-accent:    199 91 59;   /* #C75B3B (terra-dark) */
+  --c-text-inverse:   250 238 220;
+
+  /* Trading */
+  --c-long:        0 160 96;     /* darker green for contrast on cream */
+  --c-short:       220 41 64;    /* darker red */
+  --c-long-muted:  0 160 96;     /* used via alpha */
+  --c-short-muted: 220 41 64;
+  --c-neutral:     47 92 179;
+  --c-warning:     207 125 38;
+
+  /* Brand */
+  --c-terra:        199 91 59;   /* #C75B3B — pulled down from #E87B4A for readability */
+  --c-terra-hover:  175 72 45;
+  --c-terra-dark:   139 58 58;
+  --c-ember:        224 60 37;
+  --c-oxide:        139 58 58;
+  --c-dust:         184 154 138;
+  --c-void:         45 17 17;
+  --c-atmo:         91 141 239;
+
+  /* Borders */
+  --c-border:        199 91 59;       /* used with alpha via /nn */
+  --c-border-strong: 199 91 59;
+  --c-border-glow:   232 123 74;
+
+  /* Alpha defaults for border DEFAULT (so `border` class picks up ~20% alpha) */
+  --border-alpha: 0.25;
+}
+
+.dark {
+  /* Surfaces — deep space void */
+  --c-bg-base:     12 4 4;       /* #0C0404 */
+  --c-bg-card:     26 10 10;     /* #1A0A0A */
+  --c-bg-elevated: 45 17 17;
+  --c-bg-modal:    12 4 4;
+  --c-bg-input:    20 8 8;
+
+  /* Text */
+  --c-text-primary:   244 232 224; /* #F4E8E0 */
+  --c-text-secondary: 184 154 138; /* #B89A8A */
+  --c-text-muted:     107 79 67;   /* #6B4F43 */
+  --c-text-accent:    232 123 74;  /* #E87B4A */
+  --c-text-inverse:   12 4 4;
+
+  /* Trading */
+  --c-long:        0 230 138;      /* #00E68A vibrant */
+  --c-short:       255 64 87;      /* #FF4057 */
+  --c-long-muted:  0 230 138;
+  --c-short-muted: 255 64 87;
+  --c-neutral:     91 141 239;
+  --c-warning:     255 181 71;
+
+  /* Brand */
+  --c-terra:        232 123 74;   /* #E87B4A */
+  --c-terra-hover:  240 144 96;
+  --c-terra-dark:   199 91 59;
+  --c-ember:        255 87 51;
+  --c-oxide:        139 58 58;
+  --c-dust:         184 154 138;
+  --c-void:         12 4 4;
+  --c-atmo:         30 58 95;
+
+  /* Borders */
+  --c-border:        199 91 59;
+  --c-border-strong: 232 123 74;
+  --c-border-glow:   232 123 74;
+
+  --border-alpha: 0.15;
+}
+
 @layer base {
   html {
-    background-color: #0C0404;
-    color: #F4E8E0;
+    background-color: rgb(var(--c-bg-base));
+    color: rgb(var(--c-text-primary));
   }
 
   body {
     font-family: "Space Grotesk", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    background: #0C0404;
+    background: rgb(var(--c-bg-base));
+    color: rgb(var(--c-text-primary));
     position: relative;
     overflow-x: hidden;
+    transition: background-color 300ms ease, color 300ms ease;
   }
 
   body::before {
@@ -25,56 +117,63 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(ellipse at 30% 20%, rgba(232, 123, 74, 0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(139, 58, 58, 0.03) 0%, transparent 50%);
+    background: radial-gradient(ellipse at 30% 20%, rgb(var(--c-terra) / 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgb(var(--c-oxide) / 0.04) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
   }
 
   ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #0C0404; }
-  ::-webkit-scrollbar-thumb { background: #4A1C1C; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #8B3A3A; }
+  ::-webkit-scrollbar-track { background: rgb(var(--c-bg-base)); }
+  ::-webkit-scrollbar-thumb { background: rgb(var(--c-oxide) / 0.5); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--c-terra)); }
 }
 
 @layer components {
   .card {
-    @apply rounded-xl border border-border backdrop-blur-md;
-    background: linear-gradient(145deg, rgba(26, 10, 10, 0.9), rgba(45, 17, 17, 0.5));
-    box-shadow: 0 4px 24px rgba(232, 123, 74, 0.06), 0 1px 2px rgba(0, 0, 0, 0.2);
+    @apply rounded-xl border backdrop-blur-md;
+    border-color: rgb(var(--c-border) / var(--border-alpha));
+    background: linear-gradient(145deg, rgb(var(--c-bg-card) / 0.92), rgb(var(--c-bg-elevated) / 0.55));
+    box-shadow: 0 4px 24px rgb(var(--c-terra) / 0.06), 0 1px 2px rgba(0, 0, 0, 0.15);
   }
 
   .card:hover {
-    border-color: rgba(232, 123, 74, 0.25);
-    box-shadow: 0 0 30px rgba(232, 123, 74, 0.08);
+    border-color: rgb(var(--c-terra) / 0.35);
+    box-shadow: 0 0 30px rgb(var(--c-terra) / 0.1);
   }
 
   .btn-terra {
     @apply text-white font-semibold py-2.5 px-5 rounded-lg transition-all duration-200;
-    background: linear-gradient(135deg, #C75B3B 0%, #E87B4A 100%);
-    box-shadow: 0 0 20px rgba(232, 123, 74, 0.2);
+    background: linear-gradient(135deg, rgb(var(--c-terra-dark)) 0%, rgb(var(--c-terra)) 100%);
+    box-shadow: 0 0 20px rgb(var(--c-terra) / 0.25);
   }
 
   .btn-terra:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 40px rgba(232, 123, 74, 0.35);
-    filter: brightness(1.1);
+    box-shadow: 0 0 40px rgb(var(--c-terra) / 0.4);
+    filter: brightness(1.08);
   }
 
   .btn-long {
-    @apply bg-long-muted text-long border border-long/30 font-semibold py-2.5 px-5 rounded-lg transition-all duration-200;
+    @apply text-long border font-semibold py-2.5 px-5 rounded-lg transition-all duration-200;
+    background: rgb(var(--c-long) / 0.12);
+    border-color: rgb(var(--c-long) / 0.3);
   }
   .btn-long:hover {
-    @apply bg-long/20 border-long/50;
-    box-shadow: 0 0 20px rgba(0, 230, 138, 0.15);
+    background: rgb(var(--c-long) / 0.2);
+    border-color: rgb(var(--c-long) / 0.5);
+    box-shadow: 0 0 20px rgb(var(--c-long) / 0.15);
   }
 
   .btn-short {
-    @apply bg-short-muted text-short border border-short/30 font-semibold py-2.5 px-5 rounded-lg transition-all duration-200;
+    @apply text-short border font-semibold py-2.5 px-5 rounded-lg transition-all duration-200;
+    background: rgb(var(--c-short) / 0.12);
+    border-color: rgb(var(--c-short) / 0.3);
   }
   .btn-short:hover {
-    @apply bg-short/20 border-short/50;
-    box-shadow: 0 0 20px rgba(255, 64, 87, 0.15);
+    background: rgb(var(--c-short) / 0.2);
+    border-color: rgb(var(--c-short) / 0.5);
+    box-shadow: 0 0 20px rgb(var(--c-short) / 0.15);
   }
 
   .data-value {
@@ -87,12 +186,12 @@
 
   .pnl-positive {
     @apply text-long font-mono font-semibold;
-    text-shadow: 0 0 10px rgba(0, 230, 138, 0.3);
+    text-shadow: 0 0 10px rgb(var(--c-long) / 0.3);
   }
 
   .pnl-negative {
     @apply text-short font-mono font-semibold;
-    text-shadow: 0 0 10px rgba(255, 64, 87, 0.3);
+    text-shadow: 0 0 10px rgb(var(--c-short) / 0.3);
   }
 
   .heading-display {
@@ -101,37 +200,39 @@
   }
 
   .input-mars {
-    @apply w-full border border-border rounded-lg px-4 py-3 font-mono text-text-primary;
-    background: #140808;
+    @apply w-full border rounded-lg px-4 py-3 font-mono text-text-primary;
+    border-color: rgb(var(--c-border) / var(--border-alpha));
+    background: rgb(var(--c-bg-input));
   }
-  .input-mars::placeholder { color: #6B4F43; }
+  .input-mars::placeholder { color: rgb(var(--c-text-muted)); }
   .input-mars:focus {
     @apply outline-none;
-    border-color: #E87B4A;
-    box-shadow: 0 0 20px rgba(232, 123, 74, 0.1), 0 0 0 1px rgba(232, 123, 74, 0.3);
+    border-color: rgb(var(--c-terra));
+    box-shadow: 0 0 20px rgb(var(--c-terra) / 0.15), 0 0 0 1px rgb(var(--c-terra) / 0.3);
   }
 
   .badge-long {
-    @apply text-xs font-bold px-2.5 py-1 rounded-md bg-long-muted text-long border border-long/20;
+    @apply text-xs font-bold px-2.5 py-1 rounded-md text-long border;
+    background: rgb(var(--c-long) / 0.12);
+    border-color: rgb(var(--c-long) / 0.2);
   }
 
   .badge-short {
-    @apply text-xs font-bold px-2.5 py-1 rounded-md bg-short-muted text-short border border-short/20;
+    @apply text-xs font-bold px-2.5 py-1 rounded-md text-short border;
+    background: rgb(var(--c-short) / 0.12);
+    border-color: rgb(var(--c-short) / 0.2);
   }
 
-  /* Mission-control HUD corner brackets on any container */
   .hud-frame {
     position: relative;
   }
   .hud-frame::before,
-  .hud-frame::after,
-  .hud-frame > .hud-bl,
-  .hud-frame > .hud-br {
+  .hud-frame::after {
     content: '';
     position: absolute;
     width: 14px;
     height: 14px;
-    border-color: rgba(232, 123, 74, 0.5);
+    border-color: rgb(var(--c-terra) / 0.55);
     pointer-events: none;
   }
   .hud-frame::before {
@@ -147,23 +248,23 @@
     border-right: 1px solid;
   }
 
-  /* Repeating scan-line overlay; apply to a child positioned absolute */
   .scan-lines {
     background-image: repeating-linear-gradient(
       0deg,
       transparent 0px,
       transparent 3px,
-      rgba(232, 123, 74, 1) 3px,
-      rgba(232, 123, 74, 1) 4px
+      rgb(var(--c-terra)) 3px,
+      rgb(var(--c-terra)) 4px
     );
     opacity: 0.04;
     pointer-events: none;
   }
+  .dark .scan-lines { opacity: 0.04; }
 
-  /* Pulsing live-signal dot */
   .signal-dot {
-    @apply w-1.5 h-1.5 rounded-full bg-long;
-    box-shadow: 0 0 8px rgba(0, 230, 138, 0.8);
+    @apply w-1.5 h-1.5 rounded-full;
+    background: rgb(var(--c-long));
+    box-shadow: 0 0 8px rgb(var(--c-long) / 0.8);
     animation: signalPulse 1.6s ease-in-out infinite;
   }
   @keyframes signalPulse {
@@ -171,8 +272,14 @@
     50% { opacity: 0.4; transform: scale(0.75); }
   }
 
-  /* Thin terminal-style ticker strip */
   .ticker-strip {
     @apply font-mono text-[10px] tracking-[0.3em] uppercase text-text-muted;
+  }
+
+  /* Theme-aware surface gradients */
+  .mars-surface-gradient {
+    background: linear-gradient(180deg,
+      rgb(var(--c-bg-base) / 0.95),
+      rgb(var(--c-bg-card) / 0.85));
   }
 }

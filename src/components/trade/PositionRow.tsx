@@ -31,7 +31,7 @@ export function PositionRow({ position, currentPrice }: PositionRowProps) {
 
   return (
     <div className="flex items-center justify-between p-4 rounded-xl transition-all hover:border-border-strong"
-      style={{ background: "rgba(45, 17, 17, 0.4)", border: "1px solid rgba(199, 91, 59, 0.1)" }}>
+      style={{ background: "rgb(var(--c-bg-elevated) / 0.5)", border: "1px solid rgb(var(--c-border) / var(--border-alpha))" }}>
       <div className="flex items-center gap-4">
         <span className={position.isLong ? "badge-long" : "badge-short"}>
           {position.isLong ? "LONG" : "SHORT"}

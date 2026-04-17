@@ -1,5 +1,10 @@
 import type { Config } from "tailwindcss";
 
+// Colors use CSS variables (space-separated RGB channels) so Tailwind opacity
+// modifiers like `bg-terra/20` keep working, and swapping .dark on <html>
+// flips the whole palette. See src/app/globals.css for the variable values.
+const withOpacity = (varName: string) => `rgb(var(${varName}) / <alpha-value>)`;
+
 const config: Config = {
   content: [
     "./src/app/**/*.{ts,tsx}",
@@ -9,57 +14,56 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Mars surface palette
+        // Mars surface palette — stable across themes (tonal planets)
         mars: {
-          900: "#0C0404",    // deep space void
-          800: "#1A0A0A",    // Mars night sky
-          700: "#2D1111",    // dark regolith
-          600: "#4A1C1C",    // iron oxide shadow
-          500: "#8B3A3A",    // Martian dust
-          400: "#C75B3B",    // rust canyon
-          300: "#E87B4A",    // sunlit terracotta
-          200: "#F4A574",    // warm dust
-          100: "#FDD6B8",    // pale sand
-          50:  "#FFF0E5",    // frost
+          900: "#0C0404",
+          800: "#1A0A0A",
+          700: "#2D1111",
+          600: "#4A1C1C",
+          500: "#8B3A3A",
+          400: "#C75B3B",
+          300: "#E87B4A",
+          200: "#F4A574",
+          100: "#FDD6B8",
+          50:  "#FFF0E5",
         },
-        // Backgrounds
+        // Surfaces
         bg: {
-          base: "#0C0404",
-          card: "rgba(26, 10, 10, 0.85)",
-          elevated: "rgba(45, 17, 17, 0.7)",
-          modal: "rgba(12, 4, 4, 0.92)",
-          input: "#140808",
+          base:     withOpacity("--c-bg-base"),
+          card:     withOpacity("--c-bg-card"),
+          elevated: withOpacity("--c-bg-elevated"),
+          modal:    withOpacity("--c-bg-modal"),
+          input:    withOpacity("--c-bg-input"),
         },
         // Text
         text: {
-          primary: "#F4E8E0",
-          secondary: "#B89A8A",
-          muted: "#6B4F43",
-          accent: "#E87B4A",
-          inverse: "#0C0404",
+          primary:   withOpacity("--c-text-primary"),
+          secondary: withOpacity("--c-text-secondary"),
+          muted:     withOpacity("--c-text-muted"),
+          accent:    withOpacity("--c-text-accent"),
+          inverse:   withOpacity("--c-text-inverse"),
         },
-        // Trading
-        long: "#00E68A",       // terraforming green (profit)
-        short: "#FF4057",      // danger red
-        "long-muted": "rgba(0, 230, 138, 0.12)",
-        "short-muted": "rgba(255, 64, 87, 0.12)",
-        neutral: "#5B8DEF",    // atmosphere blue
-        warning: "#FFB547",    // solar warning
+        // Trading semantic (same hue across themes, we adjust alpha via muted tokens)
+        long:          withOpacity("--c-long"),
+        short:         withOpacity("--c-short"),
+        "long-muted":  withOpacity("--c-long-muted"),
+        "short-muted": withOpacity("--c-short-muted"),
+        neutral:       withOpacity("--c-neutral"),
+        warning:       withOpacity("--c-warning"),
         // Brand
-        terra: "#E87B4A",      // primary CTA
-        "terra-hover": "#F09060",
-        "terra-dark": "#C75B3B",
-        "terra-glow": "rgba(232, 123, 74, 0.4)",
-        ember: "#FF5733",      // hot accent
-        oxide: "#8B3A3A",      // muted accent
-        dust: "#B89A8A",       // text color
-        void: "#0C0404",       // deepest black
-        atmo: "#1E3A5F",       // atmosphere blue tint
+        terra:          withOpacity("--c-terra"),
+        "terra-hover":  withOpacity("--c-terra-hover"),
+        "terra-dark":   withOpacity("--c-terra-dark"),
+        ember:          withOpacity("--c-ember"),
+        oxide:          withOpacity("--c-oxide"),
+        dust:           withOpacity("--c-dust"),
+        void:           withOpacity("--c-void"),
+        atmo:           withOpacity("--c-atmo"),
         // Borders
         border: {
-          DEFAULT: "rgba(199, 91, 59, 0.15)",
-          strong: "rgba(232, 123, 74, 0.3)",
-          glow: "rgba(232, 123, 74, 0.5)",
+          DEFAULT: withOpacity("--c-border"),
+          strong:  withOpacity("--c-border-strong"),
+          glow:    withOpacity("--c-border-glow"),
         },
       },
       fontFamily: {

@@ -10,13 +10,26 @@ export const metadata: Metadata = {
   description: "Trade city-level real estate indices with up to 10x leverage. Built on Integra.",
 };
 
+// Runs before React hydrates — reads saved theme and applies .dark class so
+// the first paint matches the user's preference (no flash of wrong theme).
+const themeBootstrap = `
+  try {
+    var t = localStorage.getItem('terraform-theme');
+    if (t === null) t = 'dark';
+    if (t === 'dark') document.documentElement.classList.add('dark');
+  } catch (e) {}
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+      </head>
       <body className="min-h-screen relative">
         {/* Mars dust ambient particles */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">

@@ -37,10 +37,10 @@ function MarketCard({ id, name, slug }: { id: string; name: string; slug: string
 
           {isLoading ? (
             <div className="space-y-4">
-              <div className="h-10 rounded-lg animate-pulse" style={{ background: "rgba(74, 28, 28, 0.3)" }} />
+              <div className="h-10 rounded-lg animate-pulse" style={{ background: "rgb(var(--c-oxide) / 0.18)" }} />
               <div className="grid grid-cols-2 gap-4">
-                <div className="h-14 rounded-lg animate-pulse" style={{ background: "rgba(74, 28, 28, 0.2)" }} />
-                <div className="h-14 rounded-lg animate-pulse" style={{ background: "rgba(74, 28, 28, 0.2)" }} />
+                <div className="h-14 rounded-lg animate-pulse" style={{ background: "rgb(var(--c-oxide) / 0.12)" }} />
+                <div className="h-14 rounded-lg animate-pulse" style={{ background: "rgb(var(--c-oxide) / 0.12)" }} />
               </div>
             </div>
           ) : hasError ? (
