@@ -1,5 +1,7 @@
 "use client";
 
+import { Astronaut } from "./Astronaut";
+
 export function MarsSurface() {
   return (
     <div className="fixed bottom-0 left-0 right-0 h-32 pointer-events-none z-0 overflow-hidden">
@@ -46,6 +48,9 @@ export function MarsSurface() {
           />
         </svg>
       </div>
+
+      {/* Astronaut — walks across the surface */}
+      <Astronaut />
 
       {/* Dust particles rising from surface */}
       <div className="absolute bottom-4 left-[20%] w-1 h-1 rounded-full bg-terra/25 animate-dust-float" />
