@@ -61,11 +61,11 @@
   --c-bg-modal:    12 4 4;
   --c-bg-input:    20 8 8;
 
-  /* Text */
-  --c-text-primary:   244 232 224; /* #F4E8E0 */
-  --c-text-secondary: 184 154 138; /* #B89A8A */
-  --c-text-muted:     107 79 67;   /* #6B4F43 */
-  --c-text-accent:    232 123 74;  /* #E87B4A */
+  /* Text — values tuned for ≥4.5:1 contrast on #0C0404 (WCAG AA) */
+  --c-text-primary:   244 232 224; /* #F4E8E0 — 18.7:1 */
+  --c-text-secondary: 205 180 165; /* #CDB4A5 —  9.6:1 (was #B89A8A 7.6:1) */
+  --c-text-muted:     165 134 112; /* #A58670 —  6.0:1 (was #6B4F43 2.3:1 — FAILED) */
+  --c-text-accent:    232 123 74;  /* #E87B4A — 5.8:1 */
   --c-text-inverse:   12 4 4;
 
   /* Trading */

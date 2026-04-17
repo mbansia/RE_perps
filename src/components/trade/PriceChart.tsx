@@ -31,31 +31,47 @@ export function PriceChart({ marketId, currentPrice, lastUpdated }: Props) {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const chart = createChart(containerRef.current, {
-      autoSize: true,
+    // Read CSS variables so chart colors match the active theme. lightweight-charts
+    // takes string literals, so we sample the vars at init and re-apply on theme flips.
+    const sample = () => {
+      const s = getComputedStyle(document.documentElement);
+      const rgb = (v: string) => {
+        const parts = s.getPropertyValue(v).trim().split(/\s+/);
+        return parts.length === 3 ? `rgb(${parts.join(",")})` : null;
+      };
+      const rgba = (v: string, a: number) => {
+        const parts = s.getPropertyValue(v).trim().split(/\s+/);
+        return parts.length === 3 ? `rgba(${parts.join(",")},${a})` : null;
+      };
+      return {
+        text: rgb("--c-text-secondary") ?? "#CDB4A5",
+        grid: rgba("--c-oxide", 0.12) ?? "rgba(199,91,59,0.12)",
+        border: rgba("--c-oxide", 0.3) ?? "rgba(199,91,59,0.3)",
+        line: rgb("--c-terra") ?? "#E87B4A",
+        priceLine: rgb("--c-ember") ?? "#FF5733",
+        crosshair: rgb("--c-terra") ?? "#E87B4A",
+        crosshairLabel: rgb("--c-terra-dark") ?? "#C75B3B",
+      };
+    };
+
+    const buildOptions = (t: ReturnType<typeof sample>) => ({
       layout: {
         background: { type: ColorType.Solid, color: "transparent" },
-        textColor: "#B89A8A",
+        textColor: t.text,
         fontFamily: '"JetBrains Mono", ui-monospace, monospace',
         fontSize: 11,
       },
       grid: {
-        vertLines: {
-          color: "rgba(199, 91, 59, 0.08)",
-          style: LineStyle.Dotted,
-        },
-        horzLines: {
-          color: "rgba(199, 91, 59, 0.08)",
-          style: LineStyle.Dotted,
-        },
+        vertLines: { color: t.grid, style: LineStyle.Dotted },
+        horzLines: { color: t.grid, style: LineStyle.Dotted },
       },
       rightPriceScale: {
-        borderColor: "rgba(199, 91, 59, 0.2)",
-        textColor: "#B89A8A",
+        borderColor: t.border,
+        textColor: t.text,
         scaleMargins: { top: 0.15, bottom: 0.1 },
       },
       timeScale: {
-        borderColor: "rgba(199, 91, 59, 0.2)",
+        borderColor: t.border,
         timeVisible: true,
         secondsVisible: false,
         fixLeftEdge: true,
@@ -64,19 +80,38 @@ export function PriceChart({ marketId, currentPrice, lastUpdated }: Props) {
       crosshair: {
         mode: CrosshairMode.Magnet,
         vertLine: {
-          color: "#E87B4A",
-          width: 1,
+          color: t.crosshair,
+          width: 1 as const,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#C75B3B",
+          labelBackgroundColor: t.crosshairLabel,
         },
         horzLine: {
-          color: "#E87B4A",
-          width: 1,
+          color: t.crosshair,
+          width: 1 as const,
           style: LineStyle.Dashed,
-          labelBackgroundColor: "#C75B3B",
+          labelBackgroundColor: t.crosshairLabel,
         },
       },
     });
+
+    const themeColors = sample();
+    const chart = createChart(containerRef.current, {
+      autoSize: true,
+      ...buildOptions(themeColors),
+    });
+
+    // Re-apply options when the .dark class on <html> toggles
+    const observer = new MutationObserver(() => {
+      chart.applyOptions(buildOptions(sample()));
+      const next = sample();
+      seriesRef.current?.applyOptions({
+        lineColor: next.line,
+        topColor: `rgba(232, 123, 74, 0.4)`,
+        bottomColor: `rgba(232, 123, 74, 0.01)`,
+        priceLineColor: next.priceLine,
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
     const series = chart.addAreaSeries({
       lineColor: "#E87B4A",
@@ -110,6 +145,7 @@ export function PriceChart({ marketId, currentPrice, lastUpdated }: Props) {
     seriesRef.current = series;
 
     return () => {
+      observer.disconnect();
       chart.remove();
       chartRef.current = null;
       seriesRef.current = null;
