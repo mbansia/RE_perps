@@ -1,0 +1,21 @@
+{
+  "name": "@terraform/oracle",
+  "version": "1.0.0",
+  "description": "Terraform real estate price oracle — scrapes public data, signs with EIP-712, submits to PriceOracle.sol",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "update-once": "node scripts/update-once.js",
+    "install-browsers": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ethers": "^6.13.1",
+    "node-cron": "^3.0.3",
+    "playwright": "^1.44.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "private": true
+}

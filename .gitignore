@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Build artifacts
+.next/
+out/
+dist/
+cache/
+artifacts/
+typechain-types/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+
+# Claude Code local settings (personal tool permission allowlist)
+.claude/settings.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Hardhat
+cache/
+artifacts/
+
+# Testing
+coverage/
+coverage.json
+
+# Misc
+*.log
+*.tsbuildinfo
+
+# Studio (not part of the project)
+studio/

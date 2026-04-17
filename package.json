@@ -1,0 +1,50 @@
+{
+  "name": "terraform",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Perpetual-futures DEX for city-level real estate price indices on Integra testnet",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:coverage": "hardhat coverage",
+    "deploy:testnet": "hardhat ignition deploy ignition/modules/Terraform.ts --network integra-testnet",
+    "oracle:start": "node oracle/src/index.js",
+    "oracle:update": "node oracle/src/update-once.js"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.51.0",
+    "@web3auth/base": "^8.0.0",
+    "@web3auth/ethereum-provider": "^8.0.0",
+    "@web3auth/modal": "^8.0.0",
+    "dotenv": "^17.4.2",
+    "ethers": "^6.13.0",
+    "lightweight-charts": "^4.2.0",
+    "next": "^14.2.0",
+    "node-cron": "^3.0.3",
+    "playwright": "^1.47.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "viem": "^2.21.0",
+    "wagmi": "^2.12.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition": "^0.15.0",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.0",
+    "hardhat": "^2.22.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.5.0"
+  }
+}

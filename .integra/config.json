@@ -1,0 +1,23 @@
+{
+  "name": "Terraform",
+  "network": "testnet",
+  "branding": "custom",
+  "uiGeneration": "manual",
+  "scope": "mvp",
+  "category": "defi",
+  "markets": ["NYC", "DUBAI"],
+  "tokens": {
+    "primary": "tUSDI",
+    "secondary": "IRL",
+    "tertiary": "WIRL"
+  },
+  "oracle": {
+    "type": "self-hosted-scraper",
+    "updateFrequency": "4x/day",
+    "sources": {
+      "NYC": ["redfin", "zillow"],
+      "DUBAI": ["dxbinteract", "propertyfinder"]
+    }
+  },
+  "subdomain": "terraform.integralayer.com"
+}
