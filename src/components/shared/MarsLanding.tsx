@@ -148,7 +148,7 @@ export function MarsLanding() {
           TERRAFORM
         </h1>
         <p className="text-terra text-sm tracking-[0.25em] mt-3 uppercase">
-          Touching down on the surface
+          Trade perps based on Real Estate
         </p>
       </div>
 
