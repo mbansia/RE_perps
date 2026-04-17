@@ -99,6 +99,8 @@ export function Header() {
               { href: "/portfolio", label: "PORTFOLIO" },
               { href: "/pool", label: "LP POOL" },
               { href: "/faucet", label: "FAUCET" },
+              { href: "/docs", label: "DOCS" },
+              { href: "/brand", label: "BRAND" },
             ].map((link) => (
               <Link
                 key={link.href}
