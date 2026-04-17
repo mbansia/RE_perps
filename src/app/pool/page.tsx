@@ -17,18 +17,22 @@ export default function PoolPage() {
       { address: LIQUIDITY_POOL_ADDRESS, abi: LiquidityPoolABI, functionName: "totalDeposits" },
       { address: LIQUIDITY_POOL_ADDRESS, abi: LiquidityPoolABI, functionName: "accumulatedFees" },
       { address: LIQUIDITY_POOL_ADDRESS, abi: LiquidityPoolABI, functionName: "lpTokenValue" },
-      ...(address ? [
-        { address: LP_TOKEN_ADDRESS, abi: ERC20ABI, functionName: "balanceOf" as const, args: [address] as const },
-      ] : []),
     ],
     query: { refetchInterval: 15_000 },
+  });
+
+  const { data: lpBalanceData } = useReadContracts({
+    contracts: [
+      { address: LP_TOKEN_ADDRESS, abi: ERC20ABI, functionName: "balanceOf", args: [address ?? "0x0000000000000000000000000000000000000000"] },
+    ],
+    query: { refetchInterval: 15_000, enabled: !!address },
   });
 
   const poolValue = poolData?.[0]?.result ? Number(formatUnits(poolData[0].result as bigint, 18)) : 0;
   const totalDeposits = poolData?.[1]?.result ? Number(formatUnits(poolData[1].result as bigint, 18)) : 0;
   const fees = poolData?.[2]?.result ? Number(formatUnits(poolData[2].result as bigint, 18)) : 0;
   const lpTokenVal = poolData?.[3]?.result ? Number(formatUnits(poolData[3].result as bigint, 18)) : 1;
-  const lpBalance = poolData?.[4]?.result ? Number(formatUnits(poolData[4].result as bigint, 18)) : 0;
+  const lpBalance = lpBalanceData?.[0]?.result ? Number(formatUnits(lpBalanceData[0].result as bigint, 18)) : 0;
 
   const { writeContract: approve } = useWriteContract();
   const { writeContract: depositTx, data: depositHash } = useWriteContract();
