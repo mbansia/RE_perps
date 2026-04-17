@@ -36,10 +36,59 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-10">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-full relative overflow-hidden group-hover:shadow-glow transition-shadow"
-              style={{ background: "radial-gradient(circle at 35% 35%, #F4A574, #C75B3B, #4A1C1C)" }}>
-              <div className="absolute inset-0 rounded-full border border-white/10" />
-            </div>
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              xmlns="http://www.w3.org/2000/svg"
+              className="group-hover:drop-shadow-[0_0_12px_rgba(232,123,74,0.55)] transition-[filter] duration-300"
+            >
+              <defs>
+                <radialGradient id="marsSphere" cx="35%" cy="32%" r="70%">
+                  <stop offset="0%" stopColor="#F4A574" />
+                  <stop offset="45%" stopColor="#E87B4A" />
+                  <stop offset="80%" stopColor="#C75B3B" />
+                  <stop offset="100%" stopColor="#4A1C1C" />
+                </radialGradient>
+                <radialGradient id="marsShade" cx="50%" cy="50%" r="50%">
+                  <stop offset="80%" stopColor="transparent" />
+                  <stop offset="100%" stopColor="#2D1111" stopOpacity="0.75" />
+                </radialGradient>
+                <clipPath id="marsClip"><circle cx="16" cy="16" r="15" /></clipPath>
+              </defs>
+              <circle cx="16" cy="16" r="15" fill="url(#marsSphere)" />
+              <g clipPath="url(#marsClip)">
+                {/* Craters — dark rim + inner shadow */}
+                <g opacity="0.85">
+                  <circle cx="10" cy="11" r="2" fill="#2D1111" />
+                  <circle cx="10.4" cy="10.6" r="1.4" fill="#8B3A3A" />
+                </g>
+                <g opacity="0.8">
+                  <circle cx="20" cy="19" r="2.6" fill="#2D1111" />
+                  <circle cx="20.5" cy="18.5" r="1.9" fill="#8B3A3A" />
+                </g>
+                <g opacity="0.85">
+                  <circle cx="22" cy="10" r="1.3" fill="#2D1111" />
+                  <circle cx="22.3" cy="9.7" r="0.85" fill="#8B3A3A" />
+                </g>
+                <g opacity="0.75">
+                  <circle cx="13" cy="22" r="1.6" fill="#2D1111" />
+                  <circle cx="13.3" cy="21.7" r="1" fill="#8B3A3A" />
+                </g>
+                <g opacity="0.7">
+                  <circle cx="7" cy="18" r="1" fill="#2D1111" />
+                </g>
+                <g opacity="0.7">
+                  <circle cx="25" cy="23" r="1.1" fill="#2D1111" />
+                </g>
+                {/* Dust streaks */}
+                <ellipse cx="17" cy="14" rx="3.5" ry="0.6" fill="#C75B3B" opacity="0.35" />
+                <ellipse cx="14" cy="17" rx="4" ry="0.5" fill="#4A1C1C" opacity="0.35" />
+              </g>
+              {/* Edge shade + rim highlight */}
+              <circle cx="16" cy="16" r="15" fill="url(#marsShade)" />
+              <circle cx="16" cy="16" r="15" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="0.6" />
+            </svg>
             <span className="heading-display text-lg tracking-[0.2em] text-text-primary">
               TERRAFORM
             </span>
