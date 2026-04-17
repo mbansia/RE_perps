@@ -1,0 +1,21 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="mars" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#F4A574"/>
+      <stop offset="40%" stop-color="#E87B4A"/>
+      <stop offset="75%" stop-color="#C75B3B"/>
+      <stop offset="100%" stop-color="#4A1C1C"/>
+    </radialGradient>
+    <radialGradient id="rim" cx="50%" cy="50%" r="50%">
+      <stop offset="85%" stop-color="transparent"/>
+      <stop offset="100%" stop-color="#2D1111" stop-opacity="0.6"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#0C0404"/>
+  <circle cx="32" cy="32" r="22" fill="url(#mars)"/>
+  <circle cx="32" cy="32" r="22" fill="url(#rim)"/>
+  <ellipse cx="24" cy="27" rx="5" ry="2.2" fill="#8B3A3A" opacity="0.55"/>
+  <ellipse cx="38" cy="34" rx="6" ry="2.5" fill="#4A1C1C" opacity="0.45"/>
+  <circle cx="42" cy="22" r="2" fill="#2D1111" opacity="0.55"/>
+  <circle cx="26" cy="40" r="1.5" fill="#2D1111" opacity="0.45"/>
+</svg>
