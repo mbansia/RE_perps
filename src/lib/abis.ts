@@ -1,6 +1,37 @@
 // ABI fragments for Terraform contracts — generated from Solidity interfaces
 // Only includes the functions/events the frontend calls
 
+export const MarketManagerABI = [
+  {
+    type: "function",
+    name: "getMarket",
+    inputs: [{ name: "marketId", type: "bytes32" }],
+    outputs: [
+      {
+        name: "",
+        type: "tuple",
+        components: [
+          { name: "name", type: "string" },
+          { name: "marketId", type: "bytes32" },
+          { name: "skewScale", type: "uint256" },
+          { name: "maxFundingVelocity", type: "uint256" },
+          { name: "takerFeeRate", type: "uint256" },
+          { name: "makerFeeRate", type: "uint256" },
+          { name: "initialMarginRatio", type: "uint256" },
+          { name: "maintenanceMarginRatio", type: "uint256" },
+          { name: "liquidationFeeRate", type: "uint256" },
+          { name: "minPositionMargin", type: "uint256" },
+          { name: "maxMarketSkew", type: "uint256" },
+          { name: "maxLongOI", type: "uint256" },
+          { name: "maxShortOI", type: "uint256" },
+          { name: "active", type: "bool" },
+        ],
+      },
+    ],
+    stateMutability: "view",
+  },
+] as const;
+
 export const PriceOracleABI = [
   {
     type: "function",
