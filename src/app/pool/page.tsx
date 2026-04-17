@@ -5,9 +5,11 @@ import { useAccount, useReadContracts, useWriteContract, useWaitForTransactionRe
 import { parseUnits, formatUnits } from "viem";
 import { LiquidityPoolABI, ERC20ABI } from "@/lib/abis";
 import { LIQUIDITY_POOL_ADDRESS, TUSDI_ADDRESS, LP_TOKEN_ADDRESS, WITHDRAWAL_DELAY_HOURS } from "@/lib/constants";
+import { useAccountHealth } from "@/hooks/useAccountHealth";
 
 export default function PoolPage() {
   const { address, isConnected } = useAccount();
+  const { tUsdiBalance } = useAccountHealth();
   const [depositAmount, setDepositAmount] = useState("");
   const [withdrawAmount, setWithdrawAmount] = useState("");
 
@@ -95,20 +97,47 @@ export default function PoolPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <span className="label">Deposit tUSDI</span>
+              <div className="flex items-center justify-between">
+                <span className="label">Deposit tUSDI</span>
+                <button
+                  type="button"
+                  onClick={() => setDepositAmount(tUsdiBalance.toString())}
+                  disabled={tUsdiBalance === 0}
+                  className="text-[10px] font-mono tracking-widest text-terra hover:text-terra-hover disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  MAX
+                </button>
+              </div>
               <div className="flex gap-2">
                 <input type="number" value={depositAmount} onChange={(e) => setDepositAmount(e.target.value)} placeholder="0" className="input-mars flex-1" />
                 <button onClick={handleDeposit} disabled={depositPending} className="btn-terra text-sm">{depositPending ? "..." : "Deposit"}</button>
               </div>
+              <p className="text-xs text-text-muted font-mono">
+                Wallet: <span className="text-text-secondary">{tUsdiBalance.toFixed(2)} tUSDI</span>
+              </p>
             </div>
             <div className="space-y-2">
-              <span className="label">Withdraw LP Tokens</span>
+              <div className="flex items-center justify-between">
+                <span className="label">Withdraw LP Tokens</span>
+                <button
+                  type="button"
+                  onClick={() => setWithdrawAmount(lpBalance.toString())}
+                  disabled={lpBalance === 0}
+                  className="text-[10px] font-mono tracking-widest text-terra hover:text-terra-hover disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  MAX
+                </button>
+              </div>
               <div className="flex gap-2">
                 <input type="number" value={withdrawAmount} onChange={(e) => setWithdrawAmount(e.target.value)} placeholder="0" className="input-mars flex-1" />
                 <button onClick={() => requestWithdraw({ address: LIQUIDITY_POOL_ADDRESS, abi: LiquidityPoolABI, functionName: "requestWithdrawal", args: [parseUnits(withdrawAmount || "0", 18)] })} disabled={reqPending} className="btn-terra text-sm">{reqPending ? "..." : "Request"}</button>
                 <button onClick={() => executeWithdraw({ address: LIQUIDITY_POOL_ADDRESS, abi: LiquidityPoolABI, functionName: "executeWithdrawal", args: [] })} disabled={execPending} className="text-sm text-terra hover:text-terra-hover">{execPending ? "..." : "Execute"}</button>
               </div>
-              <p className="text-xs text-text-muted font-mono">{WITHDRAWAL_DELAY_HOURS}h delay</p>
+              <p className="text-xs text-text-muted font-mono">
+                You hold: <span className="text-text-secondary">{lpBalance.toFixed(4)} tfLP</span>
+                <span className="mx-2">·</span>
+                {WITHDRAWAL_DELAY_HOURS}h delay
+              </p>
             </div>
           </div>
         </div>

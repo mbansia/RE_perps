@@ -65,20 +65,46 @@ function CollateralManager() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <span className="label">Deposit tUSDI</span>
+          <div className="flex items-center justify-between">
+            <span className="label">Deposit tUSDI</span>
+            <button
+              type="button"
+              onClick={() => setDepositAmount(tUsdiBalance.toString())}
+              disabled={tUsdiBalance === 0}
+              className="text-[10px] font-mono tracking-widest text-terra hover:text-terra-hover disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              MAX
+            </button>
+          </div>
           <div className="flex gap-2">
             <input type="number" value={depositAmount} onChange={(e) => setDepositAmount(e.target.value)} placeholder="0" className="input-mars flex-1" />
             <button onClick={handleDeposit} disabled={depositPending} className="btn-terra text-sm">{depositPending ? "..." : "Deposit"}</button>
           </div>
-          <p className="text-xs text-text-muted font-mono">Wallet: {tUsdiBalance.toFixed(2)} tUSDI</p>
+          <p className="text-xs text-text-muted font-mono">
+            Wallet: <span className="text-text-secondary">{tUsdiBalance.toFixed(2)} tUSDI</span>
+          </p>
         </div>
         <div className="space-y-2">
-          <span className="label">Withdraw tUSDI</span>
+          <div className="flex items-center justify-between">
+            <span className="label">Withdraw tUSDI</span>
+            <button
+              type="button"
+              onClick={() => setWithdrawAmount(availableMargin.toString())}
+              disabled={availableMargin === 0}
+              className="text-[10px] font-mono tracking-widest text-terra hover:text-terra-hover disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              MAX
+            </button>
+          </div>
           <div className="flex gap-2">
             <input type="number" value={withdrawAmount} onChange={(e) => setWithdrawAmount(e.target.value)} placeholder="0" className="input-mars flex-1" />
             <button onClick={handleWithdraw} disabled={withdrawPending} className="btn-terra text-sm">{withdrawPending ? "..." : "Withdraw"}</button>
           </div>
-          <p className="text-xs text-text-muted font-mono">{WITHDRAWAL_DELAY_HOURS}h delay on withdrawals</p>
+          <p className="text-xs text-text-muted font-mono">
+            Available: <span className="text-text-secondary">${availableMargin.toFixed(2)}</span>
+            <span className="mx-2">·</span>
+            {WITHDRAWAL_DELAY_HOURS}h delay
+          </p>
         </div>
       </div>
     </div>

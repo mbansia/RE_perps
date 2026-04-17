@@ -81,6 +81,17 @@ export function TradePanel({ marketId, marketName, currentPrice }: TradePanelPro
       {collateral === 0 && (
         <div className="space-y-3 pb-5 border-b border-border">
           <p className="text-sm text-text-secondary">Deposit tUSDI collateral first</p>
+          <div className="flex items-center justify-between">
+            <span className="label">Amount</span>
+            <button
+              type="button"
+              onClick={() => setDepositAmount(tUsdiBalance.toString())}
+              disabled={tUsdiBalance === 0}
+              className="text-[10px] font-mono tracking-widest text-terra hover:text-terra-hover disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              MAX
+            </button>
+          </div>
           <input
             type="number"
             value={depositAmount}
@@ -94,7 +105,21 @@ export function TradePanel({ marketId, marketName, currentPrice }: TradePanelPro
               {depositPending ? "..." : "Deposit"}
             </button>
           </div>
-          <p className="text-xs text-text-muted font-mono">Wallet: {tUsdiBalance.toFixed(2)} tUSDI</p>
+          <p className="text-xs text-text-muted font-mono">
+            Wallet: <span className="text-text-secondary">{tUsdiBalance.toFixed(2)} tUSDI</span>
+          </p>
+        </div>
+      )}
+
+      {/* Show balances even when already deposited */}
+      {collateral > 0 && (
+        <div className="flex items-center justify-between text-xs font-mono pb-3 border-b border-border">
+          <span className="text-text-muted">
+            Wallet <span className="text-text-secondary">{tUsdiBalance.toFixed(2)} tUSDI</span>
+          </span>
+          <span className="text-text-muted">
+            Deposited <span className="text-text-secondary">${collateral.toFixed(2)}</span>
+          </span>
         </div>
       )}
 
