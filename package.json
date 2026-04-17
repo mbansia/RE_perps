@@ -14,7 +14,7 @@
     "test:coverage": "hardhat coverage",
     "deploy:testnet": "hardhat ignition deploy ignition/modules/Terraform.ts --network integra-testnet",
     "oracle:start": "node oracle/src/index.js",
-    "oracle:update": "node oracle/src/update-once.js"
+    "oracle:update": "node oracle/scripts/update-once.js"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.51.0",
